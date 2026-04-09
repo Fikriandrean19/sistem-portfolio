@@ -1,0 +1,77 @@
+<div class="container">
+
+  <div class="header">
+    <h2>Profile</h2>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Bio</th>
+        <th>Github</th>
+        <th>LinkedIn</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngIf="profile">
+        <td data-label="Name">{{ profile.name }}</td>
+        <td data-label="Email">{{ profile.email }}</td>
+        <td data-label="Bio">{{ profile.bio }}</td>
+        <td data-label="Github">
+        <a [href]="profile.github" target="_blank">Link</a>
+        </td>
+        <td data-label="LinkedIn">
+        <a [href]="profile.linkedin" target="_blank">Link</a>
+        </td>
+        <td data-label="Actions">
+        <button class="btn-primary" (click)="openModal()">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- Edit Profile -->
+<div class="modal" *ngIf="showModal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h3>Edit Profile</h3>
+      <span class="close" (click)="closeModal()">×</span>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="form-group">
+      <label>Name</label>
+      <input type="text" [(ngModel)]="editProfile.name" class="form-control">
+
+      <label>Email</label>
+      <input type="text" [(ngModel)]="editProfile.email" class="form-control">
+
+      <label>Bio</label>
+      <textarea [(ngModel)]="editProfile.bio" class="form-control"></textarea>
+
+      <label>Github</label>
+      <input type="text" [(ngModel)]="editProfile.github" class="form-control">
+
+      <label>LinkedIn</label>
+      <input type="text" [(ngModel)]="editProfile.linkedin" class="form-control">
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-save" (click)="save()">Save</button>
+      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+    </div>
+
+  </div>
+
+</div>
