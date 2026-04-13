@@ -4,6 +4,7 @@ import { Api } from '../../services/api';
 import { FormsModule } from '@angular/forms';
 import { NgZone } from '@angular/core';
 import Swal from 'sweetalert2';
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({

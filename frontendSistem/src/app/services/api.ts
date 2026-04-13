@@ -9,6 +9,10 @@ export class Api {
 
   constructor(private http: HttpClient) {}
 
+  login(data: any) {
+    return this.http.post(`${this.baseUrl}/login`, data);
+  }
+
   getProfile() {
     return this.http.get(`${this.baseUrl}/profile`);
   }

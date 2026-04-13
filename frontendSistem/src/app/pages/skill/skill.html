@@ -33,25 +33,25 @@
 </div>
 
 <!-- Add Skill Modal -->
-<div class="modal" *ngIf="showModal">
-    <div class="modal-content">
-        <h3>Tambah Skill</h3>
-        <form (ngSubmit)="save()">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" name="name" [(ngModel)]="newSkill.name" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="level">Level:</label>
-                <input type="text" name="level" [(ngModel)]="newSkill.level" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" name="image" (change)="onFileSelected($event)" (input)="onFileSelected($event)" class="form-control">
-            </div>
-            <img *ngIf="previewUrl !== null" [src]="previewUrl" width="100" class="preview-image">
-            <button type="submit" class="btn-primary">Simpan</button>
-            <button type="button" class="btn-secondary" (click)="closeModal()">Batal</button>
-        </form>
+    <div class="modal" *ngIf="showModal">
+        <div class="modal-content">
+            <h3>Tambah Skill</h3>
+            <form (ngSubmit)="save()">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" [(ngModel)]="newSkill.name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="level">Level:</label>
+                    <input type="text" name="level" [(ngModel)]="newSkill.level" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <input type="file" name="image" (change)="onFileSelected($event)" (input)="onFileSelected($event)" class="form-control">
+                </div>
+                <img *ngIf="previewUrl !== null" [src]="previewUrl" width="100" class="preview-image">
+                <button type="submit" class="btn-primary">Simpan</button>
+                <button type="button" class="btn-secondary" (click)="closeModal()">Batal</button>
+            </form>
+        </div>
     </div>
-</div>
