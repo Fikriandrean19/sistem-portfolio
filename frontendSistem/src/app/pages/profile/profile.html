@@ -12,6 +12,7 @@
         <th>Bio</th>
         <th>Github</th>
         <th>LinkedIn</th>
+        <th>Image</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -26,6 +27,10 @@
         </td>
         <td data-label="LinkedIn">
         <a [href]="profile.linkedin" target="_blank">Link</a>
+        </td>
+        <td>
+          <img *ngIf="profile.image"
+          [src]="'http://127.0.0.1:8000/storage/' + profile.image" alt="Profile Image" width="40">
         </td>
         <td data-label="Actions">
         <button class="btn-primary" (click)="openModal()">Edit</button>
@@ -50,19 +55,23 @@
 
       <div class="form-group">
       <label>Name</label>
-      <input type="text" [(ngModel)]="editProfile.name" class="form-control">
+      <input type="text" name="name" [(ngModel)]="editProfile.name" class="form-control">
 
       <label>Email</label>
-      <input type="text" [(ngModel)]="editProfile.email" class="form-control">
+      <input type="text" name="email" [(ngModel)]="editProfile.email" class="form-control">
 
       <label>Bio</label>
-      <textarea [(ngModel)]="editProfile.bio" class="form-control"></textarea>
+      <textarea name="bio" [(ngModel)]="editProfile.bio" class="form-control"></textarea>
 
       <label>Github</label>
-      <input type="text" [(ngModel)]="editProfile.github" class="form-control">
+      <input type="text" name="github" [(ngModel)]="editProfile.github" class="form-control">
 
       <label>LinkedIn</label>
-      <input type="text" [(ngModel)]="editProfile.linkedin" class="form-control">
+      <input type="text" name="linkedin" [(ngModel)]="editProfile.linkedin" class="form-control">
+
+      <label>Image</label>
+      <input type="file" name="image" (change)="onImageChange($event)" class="form-control">
+      <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview" width="100">
       </div>
 
     </div>

@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import  { HostListener } from '@angular/core';
 import { NgZone } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-project',
@@ -73,9 +72,10 @@ export class Project implements OnInit{
   return url;
 }
 
-  save() {
-    if (this.isLoading) return;
+save() {
+  if (this.isLoading) return;
   this.isLoading = true;
+
   const formData = new FormData();
   formData.append('title', this.newProject.title || '');
   formData.append('description', this.newProject.description || '');
@@ -86,19 +86,24 @@ export class Project implements OnInit{
     formData.append('image', this.selectedFile);
   }
 
-  if (this.isEdit) {
-    formData.append('_method', 'PUT');
+  if (this.isEdit) formData.append('_method', 'PUT');
 
-    this.api.updateProject(this.editId!, formData).subscribe(() => {
+  const request = this.isEdit
+    ? this.api.updateProject(this.editId!, formData)
+    : this.api.addProject(formData);
+
+  request.subscribe({
+    next: () => {
       this.loadData();
       this.showModal = false;
-    });
-  } else {
-    this.api.addProject(formData).subscribe(() => {
-      this.loadData();
-      this.showModal = false;
-    });
-  }
+    },
+    error: () => {
+      Swal.fire('Error!', 'Gagal menyimpan data.', 'error');
+    },
+    complete: () => {
+      this.isLoading = false; 
+    }
+  });
 }
 
   loadData() {

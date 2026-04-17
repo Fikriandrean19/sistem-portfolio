@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\profile;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -28,7 +30,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -36,7 +38,7 @@ class ProfileController extends Controller
      */
     public function show(profile $profile)
     {
-        //
+        return response()->json($profile);
     }
 
     /**
@@ -52,14 +54,26 @@ class ProfileController extends Controller
      */
     public function update(Request $request, profile $profile)
     {
-
-        $profile->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'bio' => $request->bio,
-            'github' => $request->github,
-            'linkedin' => $request->linkedin,
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
         ]);
+
+        $profile->name = $request->name;
+        $profile->email = $request->email;
+        $profile->bio = $request->bio;
+        $profile->github = $request->github;
+        $profile->linkedin = $request->linkedin;
+
+        if ($request->hasFile('image')) {
+            if ($profile->image) {
+                Storage::disk('public')->delete($profile->image);
+            }
+
+            $profile->image = $request->file('image')->store('profiles', 'public');
+        }
+
+        $profile->save();
 
         return response()->json($profile);
     }

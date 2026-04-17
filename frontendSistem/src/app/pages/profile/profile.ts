@@ -15,6 +15,9 @@ export class Profile  implements OnInit {
   profile: any;
   editProfile: any;
   showModal = false;
+  selectedImage: File | null = null;
+  previewUrl: string | null = null;
+
 
   constructor(private api: Api, private cdr: ChangeDetectorRef) {}
 
@@ -23,7 +26,8 @@ export class Profile  implements OnInit {
   }
 
   loadData() {
-       this.api.getProfile().subscribe((res: any) => {
+      this.api.getProfile().subscribe((res: any) => {
+       console.log('GET PROFILE RESPONSE:', res);
       this.profile = res;
       this.cdr.detectChanges();
     });
@@ -31,6 +35,7 @@ export class Profile  implements OnInit {
 
   openModal() {
     this.editProfile = { ...this.profile };
+    console.log('OPEN MODAL editProfile:', this.editProfile);
     this.showModal = true;
   }
 
@@ -38,16 +43,36 @@ export class Profile  implements OnInit {
     this.showModal = false;
   }
 
-save() {
-  this.api.updateProfile(this.profile.id, this.editProfile).subscribe({
-    next: (res) => {
+  onImageChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+      this.previewUrl = URL.createObjectURL(file);
+    }
+  }
 
-      this.profile = res; 
+save() {
+  const formData = new FormData();
+
+  formData.append('_method', 'PUT');
+
+  formData.append('name', this.editProfile?.name ?? '');
+  formData.append('email', this.editProfile?.email ?? '');
+  formData.append('bio', this.editProfile?.bio ?? '');
+  formData.append('github', this.editProfile?.github ?? '');
+  formData.append('linkedin', this.editProfile?.linkedin ?? '');
+
+  if (this.selectedImage) {
+    formData.append('image', this.selectedImage);
+  }
+
+  this.api.updateProfile(this.profile.id, formData).subscribe({
+    next: (res) => {
+      this.profile = res;
       this.showModal = false;
     },
     error: (err) => {
-      console.error('ERROR:', err);
-      alert('Gagal update!');
+      console.error(err);
     }
   });
 }

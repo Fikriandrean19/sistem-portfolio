@@ -19,7 +19,7 @@
       formControlName="password"
     />
 
-    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text">
       Password minimal 6 karakter
     </div>
 

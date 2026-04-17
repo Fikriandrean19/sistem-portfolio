@@ -46,7 +46,7 @@ export class Api {
   }
 
   updateProfile(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/profile/${id}`, data);
+    return this.http.post(`${this.baseUrl}/profile/${id}`, data);
   }
 
   updateProject(id: number, data: any) {

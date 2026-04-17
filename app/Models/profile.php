@@ -14,5 +14,6 @@ class profile extends Model
         'bio',
         'github',
         'linkedin',
+        'image',
     ];
 }
